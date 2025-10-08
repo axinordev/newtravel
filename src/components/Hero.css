@@ -1,0 +1,62 @@
+.siteBanner {
+  background-size: cover;
+  background-position: center;
+  height: 95vh; /* full viewport height */
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white;
+  margin: 0;
+  padding: 0;
+  z-index: 1; /* Lower than navbar's z-index of 100 */
+  padding: 0px 78.528px;
+}
+
+.siteBanner .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0.1,0.05); /* overlay */
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  display: flex;
+  justify-content: flex-start; /* moves items to the left */
+  align-items: flex-end;       /* moves items to the bottom */ /* horizontal center */
+ /* text-align: center;*/
+}
+
+.hero-content h1 {
+  margin: 0;
+  font-size: 90px;
+  padding: 0px 0px 49.08px;
+}
+
+.siteIntro {
+  background-color: #023572;
+  width: 100%;
+  height: 70vh;
+  margin-top: 90vh;
+}
+
+.siteIntro p {
+    font-size: 1.2rem;
+}
+
+.text-white {
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}

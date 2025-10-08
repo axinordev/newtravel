@@ -1,0 +1,27 @@
+.map-section {
+  width: 100%;
+ /* padding: 80px 20px;*/
+  text-align: center;
+  background-color: #f9f9f9;
+  margin-top: 0;
+}
+
+.map-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+/* Full-width map with 60vh height */
+.map-container {
+  width: 100%;
+  height: 60vh; /* 60% of viewport height */
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0; /* optional, remove rounded corners if you want full width */
+}
