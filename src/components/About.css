@@ -25,9 +25,11 @@
 .about-content {
   display: flex;
   align-items: center;
-  gap: 30px;
+  justify-content: space-between;
+  gap: 20px;
   margin-bottom: 50px;
 }
+
 
 .about-text {
   flex: 0 0 60%;
@@ -51,16 +53,19 @@
 }
 
 .about-image {
-  flex: 0 0 50%;
+  flex: 0 0 45%;
   border-radius: 10px;
   overflow: hidden;
+  margin-left: -70px; /* ✅ Pull slightly left for balance */
 }
 
 .about-image img {
   width: 100%;
   height: auto;
   display: block;
+  object-fit: contain; /* ensures no overflow distortion */
 }
+
 
 /* Tab Navigation */
 .tab-navigation {

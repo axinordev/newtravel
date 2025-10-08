@@ -11,8 +11,9 @@ const Hero = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="overlay"></div>
+        <div className="blue-overlay"></div> {/* ✅ Added subtle blue layer */}
         <div className="hero-content">
-          <h1 className="m-0 text-uppercase fw-lighter" data-aos="fade-up">
+          <h1 className="m-0 text-uppercase fw-normal" data-aos="fade-up">
             Together We <strong>G</strong>r<strong>o</strong>w
           </h1>
         </div>
@@ -26,9 +27,9 @@ const Hero = () => {
                 className="img-fluid"
                 src={heroImage25}
                 alt="26 years badge" 
-                data-aos="zoom-out-right" 
-                data-aos-anchor-placement="center-bottom" 
-                data-aos-delay="200" 
+                data-aos="zoom-out-right"
+                data-aos-anchor-placement="center-bottom"
+                data-aos-delay="200"
                 data-aos-easing="ease-out-back"
               />
             </div>
