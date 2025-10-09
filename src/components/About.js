@@ -10,7 +10,7 @@ import malaysiaImg from '../assets/upcoming_tours/malaysia.png';
 import dubaiImg from '../assets/upcoming_tours/dubai.png';
 import thailandImg from '../assets/upcoming_tours/thailand.jpg';
 import azerbaijanImg from '../assets/upcoming_tours/azerbaijan.jpg';
-import PortugalImg from'../assets/upcoming_tours/Portugal.jpg';
+import PortugalImg from '../assets/upcoming_tours/Portugal.jpg';
 import goaImg from '../assets/upcoming_tours/goa.jpg';
 import rajasthanImg from '../assets/upcoming_tours/rajasthan.jpg';
 import kashmirImg from '../assets/upcoming_tours/kashmir.jpg';
@@ -34,8 +34,7 @@ import KannurImg from '../assets/upcoming_tours/Kannur.jpg';
 import KollamImg from '../assets/upcoming_tours/kollam.jpg';
 import alappuzhaImg from '../assets/upcoming_tours/alappuzha.jpg';
 
-
-// Use placeholder for missing images
+// Placeholder for missing images
 const placeholderImg = 'https://via.placeholder.com/300x200/003366/FFFFFF?text=Coming+Soon';
 
 const About = () => {
@@ -44,6 +43,7 @@ const About = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef(null);
 
+  // --- TOUR DATA ---
   const upcomingTours = {
     international: [
       { id: 1, name: 'Canada', image: canadaImg },
@@ -98,9 +98,8 @@ const About = () => {
     ],
   };
 
-  const handleUpcomingTabChange = (tab) => {
-    setUpcomingTab(tab);
-  };
+  // --- HANDLERS ---
+  const handleUpcomingTabChange = (tab) => setUpcomingTab(tab);
 
   const handlePopularTabChange = (tab) => {
     setPopularTab(tab);
@@ -108,64 +107,66 @@ const About = () => {
   };
 
   const handlePrev = () => {
-    const destinations = popularDestinations[popularTab];
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
+    setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
   };
 
   const handleNext = () => {
     const destinations = popularDestinations[popularTab];
-    setCurrentIndex((prevIndex) => 
-      prevIndex < destinations.length - 5 ? prevIndex + 1 : destinations.length - 5
+    const maxIndex = Math.max(destinations.length - 5, 0);
+    setCurrentIndex((prevIndex) =>
+      prevIndex < maxIndex ? prevIndex + 1 : maxIndex
     );
   };
 
   return (
-    <div className="about-container">
+    <div className="about-container" id="About">
       <div className="about-section">
+        {/* --- ABOUT SECTION --- */}
         <div className="about-content">
           <div className="about-text">
             <h2>NEW ALLIED TOURS AND TRAVELS</h2>
             <p>
-              New Allied Tours & Travels, founded in 1999, brings over 25 years of travel industry expertise to your vacation planning. IATA accredited and recognized for our exceptional service, we offer a full range of services including online ticketing, hotel reservations, visa and passport assistance, tours, travel insurance, and luxury vehicle rentals. We also assist in renewal of US passports. Recognized by the Government of India and accredited by the International Air Transport Association, we ensure top-tier service and exceptional travel experiences. Our headquarters in Hyampally Nagar, Kochi, is always ready to welcome you, and we grow together, one journey at a time.
+              New Allied Tours & Travels, founded in 1999, brings over 25 years of travel
+              industry expertise to your vacation planning. IATA accredited and recognized
+              for our exceptional service, we offer online ticketing, hotel reservations,
+              visa and passport assistance, tours, travel insurance, and luxury vehicle
+              rentals. Recognized by the Government of India and accredited by the IATA,
+              we ensure top-tier service and unforgettable travel experiences. Our
+              headquarters in Kochi is always ready to welcome you — together, we grow
+              one journey at a time.
             </p>
           </div>
           <div className="about-image">
-            <img src={map_tourist} alt="New Allied Tours" />
+            <img src={map_tourist} alt="Map of Tourist Destinations" />
           </div>
         </div>
 
+        {/* --- UPCOMING TOURS --- */}
         <section>
           <h2 className="section-title">UPCOMING TOURS</h2>
           <div className="tab-container">
             <div className="tab-options">
-              <div
-                className={`tab-option ${upcomingTab === 'international' ? 'active' : ''}`}
-                onClick={() => handleUpcomingTabChange('international')}
-              >
-                INTERNATIONAL
-              </div>
-              <div
-                className={`tab-option ${upcomingTab === 'domestic' ? 'active' : ''}`}
-                onClick={() => handleUpcomingTabChange('domestic')}
-              >
-                DOMESTIC
-              </div>
-              <div
-                className={`tab-option ${upcomingTab === 'kerala' ? 'active' : ''}`}
-                onClick={() => handleUpcomingTabChange('kerala')}
-              >
-                KERALA
-              </div>
+              {['international', 'domestic', 'kerala'].map((tab) => (
+                <div
+                  key={tab}
+                  className={`tab-option ${upcomingTab === tab ? 'active' : ''}`}
+                  onClick={() => handleUpcomingTabChange(tab)}
+                >
+                  {tab.toUpperCase()}
+                </div>
+              ))}
             </div>
             <div className="tour-cards">
-              {upcomingTours[upcomingTab].slice(0, 5).map((tour, index) => (
-                <div className="tour-card" key={tour.id}>
+              {upcomingTours[upcomingTab].slice(0, 5).map((tour) => (
+                <div className="tour-card" key={`${upcomingTab}-${tour.id}`}>
                   <div className="card-image">
-                    <img src={tour.image} alt={tour.name} />
+                    <img src={tour.image || placeholderImg} alt={tour.name} />
                   </div>
                   <div className="card-content">
                     <h3>{tour.name}</h3>
-                    <button className="view-details-btn">View Details</button>
+                    <button type="button" className="view-details-btn">
+                      View Details
+                    </button>
                   </div>
                 </div>
               ))}
@@ -173,54 +174,51 @@ const About = () => {
           </div>
         </section>
 
+        {/* --- POPULAR DESTINATIONS --- */}
         <section>
           <h2 className="section-title">POPULAR DESTINATIONS</h2>
           <div className="tab-container">
             <div className="tab-options">
-              <div
-                className={`tab-option ${popularTab === 'international' ? 'active' : ''}`}
-                onClick={() => handlePopularTabChange('international')}
-              >
-                INTERNATIONAL
-              </div>
-              <div
-                className={`tab-option ${popularTab === 'domestic' ? 'active' : ''}`}
-                onClick={() => handlePopularTabChange('domestic')}
-              >
-                DOMESTIC
-              </div>
-              <div
-                className={`tab-option ${popularTab === 'kerala' ? 'active' : ''}`}
-                onClick={() => handlePopularTabChange('kerala')}
-              >
-                KERALA
-              </div>
+              {['international', 'domestic', 'kerala'].map((tab) => (
+                <div
+                  key={tab}
+                  className={`tab-option ${popularTab === tab ? 'active' : ''}`}
+                  onClick={() => handlePopularTabChange(tab)}
+                >
+                  {tab.toUpperCase()}
+                </div>
+              ))}
             </div>
             <div className="destinations-carousel-container">
               <div className="carousel-arrow left" onClick={handlePrev}>
                 &#10094;
               </div>
               <div className="destinations-carousel" ref={carouselRef}>
-                {popularDestinations[popularTab].slice(currentIndex, currentIndex + 5).map((destination, index) => {
-                  const isActive = index === 2;
-                  return (
-                    <div
-                      className={`destination-card ${isActive ? 'active' : ''}`}
-                      key={destination.id}
-                      style={{
-                        transform: isActive ? 'scale(1.1)' : 'scale(1)',
-                        zIndex: isActive ? 2 : 1
-                      }}
-                    >
-                      <div className="card-image">
-                        <img src={destination.image} alt={destination.name} />
+                {popularDestinations[popularTab]
+                  .slice(currentIndex, currentIndex + 5)
+                  .map((destination, index) => {
+                    const isActive = index === 2;
+                    return (
+                      <div
+                        key={`${popularTab}-${destination.id}`}
+                        className={`destination-card ${isActive ? 'active' : ''}`}
+                        style={{
+                          transform: isActive ? 'scale(1.1)' : 'scale(1)',
+                          zIndex: isActive ? 2 : 1,
+                        }}
+                      >
+                        <div className="card-image">
+                          <img
+                            src={destination.image || placeholderImg}
+                            alt={destination.name}
+                          />
+                        </div>
+                        <div className="card-content">
+                          <h3>{destination.name}</h3>
+                        </div>
                       </div>
-                      <div className="card-content">
-                        <h3>{destination.name}</h3>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
               <div className="carousel-arrow right" onClick={handleNext}>
                 &#10095;
@@ -229,8 +227,15 @@ const About = () => {
           </div>
         </section>
       </div>
-      <a href="https://wa.me/1234567890" className="whatsapp-float" target="_blank" rel="noopener noreferrer">
-        <img src={whatsappIcon} alt="WhatsApp" />
+
+      {/* --- WhatsApp Floating Button --- */}
+      <a
+        href="https://wa.me/1234567890"
+        className="whatsapp-float"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img src={whatsappIcon} alt="Chat on WhatsApp" />
       </a>
     </div>
   );

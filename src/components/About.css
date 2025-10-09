@@ -1,4 +1,3 @@
-/* About.css */
 .about-container {
   padding: 65px 0;
   background-image: url('../assets/images/mountain_background1.jpg');
@@ -13,6 +12,7 @@
   padding: 30px;
 }
 
+/* Titles */
 .section-title {
   text-align: left;
   color: #003366;
@@ -22,6 +22,7 @@
   font-weight: 350;
 }
 
+/* About section */
 .about-content {
   display: flex;
   align-items: center;
@@ -30,16 +31,14 @@
   margin-bottom: 50px;
 }
 
-
 .about-text {
   flex: 0 0 60%;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-
 }
 
 .about-text h2 {
   color: #003366;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   font-size: 36px;
   font-weight: 350;
 }
@@ -48,7 +47,6 @@
   line-height: 1.6;
   margin-bottom: 15px;
   font-size: 18px;
-  font-family: 'Poppins', sans-serif;
   letter-spacing: 1px;
 }
 
@@ -56,39 +54,32 @@
   flex: 0 0 45%;
   border-radius: 10px;
   overflow: hidden;
-  margin-left: -70px; /* ✅ Pull slightly left for balance */
+  margin-left:-40px ;
 }
 
 .about-image img {
   width: 100%;
   height: auto;
-  display: block;
-  object-fit: contain; /* ensures no overflow distortion */
+  object-fit: contain;
 }
 
-
-/* Tab Navigation */
-.tab-navigation {
-  margin-bottom: 30px;
-}
-
+/* Tabs */
 .tab-options {
   display: flex;
   justify-content: flex-start;
   width: 50%;
   border-bottom: 2px solid #003366;
-  background-color: transparent;
   margin-bottom: 55px;
 }
 
 .tab-option {
+  flex: 1;
   padding: 10px 20px;
+  text-align: center;
   cursor: pointer;
   font-weight: 500;
   color: #333;
   transition: color 0.3s;
-  flex: 1;
-  text-align: center;
 }
 
 .tab-option.active {
@@ -96,59 +87,22 @@
   font-weight: 600;
 }
 
-.tab-indicator {
-  position: relative;
-  height: 3px;
-  width: 50%;
-}
-
-.indicator {
-  position: absolute;
-  height: 3px;
-  background-color: #003366;
-  bottom: 0;
-  transition: transform 0.3s ease;
-  width: 33.33%; /* Each tab takes up 1/3 of the 50% width */
-}
-
-.indicator.international {
-  transform: translateX(0);
-}
-
-.indicator.domestic {
-  transform: translateX(100%);
-}
-
-.indicator.kerala {
-  transform: translateX(200%);
-}
-
-/* Tour Cards */
+/* Tour cards */
 .tour-cards {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
   justify-content: center;
-  margin: 0 auto;
 }
 
 .tour-card {
   width: calc(33.33% - 20px);
   max-width: 380px;
-  min-width: 280px;
-  background-color: white;
+  background: white;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-  margin-bottom: 20px;
-}
-
-/* Specific styling for the 4th and 5th cards to center them */
-.tour-card:nth-child(4),
-.tour-card:nth-child(5) {
-  width: calc(50% - 30px);
-  max-width: 380px;
 }
 
 .tour-card:hover {
@@ -173,41 +127,40 @@
 }
 
 .card-content h3 {
-  margin: 0 0 10px;
+  margin-bottom: 10px;
   font-size: 18px;
   color: #003366;
 }
 
 .view-details-btn {
-  background-color: #003366;
-  color: white;
+  background: #003366;
+  color: #fff;
   border: none;
   padding: 8px 15px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
+  transition: background 0.3s;
 }
 
 .view-details-btn:hover {
-  background-color: #002244;
+  background: #002244;
 }
 
-/* Destinations Carousel */
+/* Carousel */
 .destinations-carousel-container {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 20px 10px;
   width: 100%;
+  padding: 20px 10px;
 }
 
 .carousel-arrow {
   position: absolute;
   width: 40px;
   height: 40px;
-  background-color: rgba(0, 51, 102, 0.7);
-  color: white;
+  background: rgba(0, 51, 102, 0.7);
+  color: #fff;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -215,11 +168,11 @@
   font-size: 24px;
   cursor: pointer;
   z-index: 10;
-  transition: background-color 0.3s;
+  transition: background 0.3s;
 }
 
 .carousel-arrow:hover {
-  background-color: rgba(0, 51, 102, 1);
+  background: rgba(0, 51, 102, 1);
 }
 
 .carousel-arrow.left {
@@ -242,7 +195,7 @@
 .destination-card {
   width: 18%;
   margin: 0 1%;
-  background-color: white;
+  background: white;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -252,7 +205,7 @@
 .destination-card .card-image {
   position: relative;
   width: 100%;
-  padding-top: 133.33%; /* 3:4 Aspect Ratio (height > width) */
+  padding-top: 133.33%;
   overflow: hidden;
 }
 
@@ -268,30 +221,23 @@
 .destination-card .card-content {
   position: absolute;
   bottom: 0;
-  left: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 10px;
   text-align: center;
-}
-
-.destination-card .card-content h3 {
-  margin: 0;
-  color: white;
-  font-size: 18px;
 }
 
 .destination-card.active {
   z-index: 2;
 }
 
-/* WhatsApp Float */
+/* WhatsApp Button */
 .whatsapp-float {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 100;
+  z-index: 9999;
   transition: transform 0.3s;
 }
 
@@ -304,83 +250,43 @@
   transform: scale(1.1);
 }
 
-/* Responsive Styles */
+/* Responsive */
 @media (max-width: 992px) {
   .about-content {
     flex-direction: column;
   }
-  
   .about-image {
     width: 100%;
   }
-  
   .tab-options {
     width: 80%;
   }
-  
-  .tab-indicator {
-    width: 80%;
-  }
-  
   .tour-card {
     width: calc(50% - 15px);
   }
-  
   .destination-card {
     width: 30%;
-    margin: 0 1.5%;
   }
 }
 
 @media (max-width: 768px) {
-  .about-text {
-    flex: 0 0 100%;
-    padding-right: 0;
-    margin-bottom: 20px;
-  }
-  
-  .about-image {
-    flex: 0 0 100%;
-    height: 200px;
-  }
-  
   .tour-card {
     width: 100%;
     max-width: 450px;
   }
-  
-  .tab-options {
-    width: 100%;
-  }
-  
-  .tab-indicator {
-    width: 100%;
-  }
-  
   .destination-card {
     width: 45%;
-    margin: 0 2.5%;
   }
 }
 
 @media (max-width: 576px) {
-  .tab-option {
-    padding: 10px;
-    font-size: 14px;
+  .destination-card {
+    width: 80%;
+    margin: 0 auto;
   }
-  
-  .destinations-carousel-container {
-    padding: 10px;
-  }
-  
   .carousel-arrow {
     width: 30px;
     height: 30px;
     font-size: 18px;
-  }
-  
-  .destination-card {
-    width: 80%;
-    margin: 0 10%;
   }
 }
