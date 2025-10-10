@@ -228,7 +228,7 @@ const About = () => {
         </section>
       </div>
 
-      {/* --- WhatsApp Floating Button --- */}
+      {/* --- WhatsApp Floating --- */}
       <a
         href="https://wa.me/1234567890"
         className="whatsapp-float"
