@@ -35,7 +35,7 @@ const Hero = () => {
             </div>
             <div className="col-md">
               <p className="mb-3 text-white ps-xl-5 25years">
-                For 26 years, we've been discovering new horizons, creating memories, and building connections together. Celebrating <span className="d-inline-block">26 years</span> of going together, growing together!
+                For 26 : years, we've been discovering new horizons, creating memories, and building connections together. Celebrating <span className="d-inline-block">26 years</span> of going together, growing together!
               </p>
               <p className="m-0 text-white ps-xl-5 25years">
                 Since 1999, New Allied Tours and Travels has been your trusted partner in crafting unforgettable journeys. Thank you for being a part of our story. Here’s to many more adventures ahead!
