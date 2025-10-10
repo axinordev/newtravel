@@ -11,9 +11,9 @@ const Hero = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="overlay"></div>
-        <div className="blue-overlay"></div> {/* ✅ Added subtle blue layer */}
+        <div className="blue-overlay"></div>
         <div className="hero-content">
-          <h1 className="m-0 text-uppercase fw-normal" data-aos="fade-up">
+          <h1 className="m-0 text-uppercase fw-lighter" data-aos="fade-up">
             Together We <strong>G</strong>r<strong>o</strong>w
           </h1>
         </div>
