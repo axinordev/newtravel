@@ -20,7 +20,7 @@ const Gallery = () => {
   return (
     <div className="gallery-container" id="gallery">
       {/* Banner Section */}
-      <Navbar/>
+
       <section
         className="gallery-banner"
         style={{ backgroundImage: `url(${bannerBg})` }}
@@ -78,7 +78,6 @@ const Gallery = () => {
       </div>
       <GetInTouch/>
       <Map/>
-      <Footer/>
     </div>
   );
 };

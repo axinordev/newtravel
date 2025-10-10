@@ -1,26 +1,24 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Gallery from './pages/Gallery';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Services from './components/Services';
-import Map from './components/Map';
 import Footer from './components/Footer';
-import About from './components/About';
 import GetInTouch from './components/Get_in_touch';
-import Plan_your_trip from './components/Plan_your_trip';
+import Map from './components/Map';
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Hero />
-      <About />
-      <Services />
-      <Plan_your_trip />
-      <GetInTouch />
-      <Map />
-      <Footer />
-    </>
+<Router>
+  <Navbar /> {/* Always visible */}
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/gallery" element={<Gallery />} />
+  </Routes>
+  <GetInTouch/>
+  <Map/>
+  <Footer /> {/* Always visible */}
+</Router>
   );
 }
 

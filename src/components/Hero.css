@@ -131,3 +131,14 @@
     line-height: 1.5;
   }
 }
+.hero-badge {
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .hero-badge {
+    max-width: 220px;
+  }
+}

@@ -24,7 +24,7 @@ const Hero = () => {
           <div className="row align-items-center gx-lg-5 gy-5">
             <div className="col-lg-4 col-sm-5">
               <img
-                className="img-fluid"
+                className="img-fluid hero-badge"
                 src={heroImage25}
                 alt="26 years badge" 
                 data-aos="zoom-out-right"

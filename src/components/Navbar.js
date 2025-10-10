@@ -4,11 +4,13 @@ import main_logo from '../assets/images/main_logo.png';
 import facebookIcon from "../assets/icons/facebook.png";
 import instagramIcon from "../assets/icons/instagram.png";
 import { FaFacebookF, FaInstagram } from "react-icons/fa"; 
+import { useNavigate } from 'react-router';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  const navigate = useNavigate()
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
 
@@ -60,7 +62,7 @@ const Navbar = () => {
               <li><a href="#services" onClick={closeMenu}>Services</a></li>
               <li><a href="#plan" onClick={closeMenu}>Plan Your Trip</a></li>
               <li><a href="#testimonials" onClick={closeMenu}>Testimonials</a></li>
-              <li><a href="#gallery" onClick={closeMenu}>Gallery</a></li>
+              <li><a href="#gallery" onClick={()=>navigate("/gallery")}>Gallery</a></li>
               <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
             </ul>
             {/* ✅ Logo at the bottom */}
