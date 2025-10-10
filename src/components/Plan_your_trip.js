@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Plan_your_trip.css";
+import Testimonials from "./Testimonials";
 
 const Plan_your_trip = () => {
   const [step, setStep] = useState(1);
@@ -99,7 +100,7 @@ const Plan_your_trip = () => {
   };
 
   return (
-    <div className="plan-trip-container">
+    <div className="plan-trip-container" id="plan">
       <section className="section-one" onClick={(e) => e.stopPropagation()}>
         <div className="plan-form-wrapper">
           <h2 className="plan-title">PLAN YOUR TRIP</h2>
@@ -286,6 +287,7 @@ const Plan_your_trip = () => {
           </div>
         </div>
       </section>
+      <Testimonials/>
     </div>
   );
 };

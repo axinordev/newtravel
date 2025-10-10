@@ -275,3 +275,22 @@
     transform: translateY(0);
   }
 }
+/* ====== Larger Form on Desktop ====== */
+@media (min-width: 1024px) {
+  .plan-form-wrapper {
+    max-width: 650px; /* increased from 450px */
+    padding: 50px 40px; /* add some breathing room */
+  }
+
+  .plan-title {
+    font-size: 2rem;
+  }
+
+  .plan-question {
+    font-size: 1.4rem;
+  }
+
+  .plan-field input {
+    font-size: 1rem;
+  }
+}
