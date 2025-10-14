@@ -1,0 +1,26 @@
+/* Common styles for loading and error states */
+.loading, .loading-indicator {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  width: 100%;
+}
+
+.error, .error-message, .error-banner {
+  padding: 10px 20px;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-left: 4px solid #ff0000;
+  color: #d32f2f;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+.error-banner {
+  position: sticky;
+  top: 70px;
+  z-index: 100;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './About.css';
+import './common.css';
 import whatsappIcon from '../assets/icons/whatsapp.png';
 import map_tourist from '../assets/images/map_tourist.png';
 import axios from 'axios';
