@@ -5,14 +5,32 @@ import facebookIcon from "../assets/icons/facebook.png";
 import instagramIcon from "../assets/icons/instagram.png";
 import { FaFacebookF, FaInstagram } from "react-icons/fa"; 
 import { useNavigate } from 'react-router';
+import axios from "axios";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [contactData, setContactData] = useState(null); // ✅ new state
 
   const navigate = useNavigate()
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
+
+  // ✅ Fetch contact info from backend
+  useEffect(() => {
+    axios
+      .get("http://31.97.205.45:8081/api/admin_contact_section/")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setContactData(response.data[0]);
+        } else {
+          setContactData(response.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching contact data:", error);
+      });
+  }, []);
 
   // Scroll effect
   useEffect(() => {
@@ -29,19 +47,49 @@ const Navbar = () => {
       <div className="top-bar">
         <div className="container">
           <div className="top-bar-content">
-            <span>PHONE: +91 484 4028084 / +91 7558825552 &nbsp;</span>
-            <span>&nbsp;| &nbsp;&nbsp;EMAIL: tours@newalliedtour.net</span>
-            <span>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-            <span>
-              <div className="nav-social">
-              <a href="https://www.facebook.com/newalliedtours" target="_blank" rel="noopener noreferrer">
-                <img src={facebookIcon} alt="Facebook" className="social-icon" width={8} />
-              </a>
-              <a href="https://www.instagram.com/newallied_tours" target="_blank" rel="noopener noreferrer">
-                <img src={instagramIcon} alt="Instagram" className="social-icon" width={16} />
-              </a>
-              </div>
-            </span>
+            {contactData ? (
+              <>
+                <span>
+                  PHONE: +91 {contactData.phone} / +91 {contactData.whatsapp_contact} &nbsp;
+                </span>
+                <span>&nbsp;| &nbsp;&nbsp;EMAIL: {contactData.email}</span>
+                <span>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
+                <span>
+                  <div className="nav-social">
+                    {contactData.facebook_link && (
+                      <a
+                        href={contactData.facebook_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={facebookIcon}
+                          alt="Facebook"
+                          className="social-icon"
+                          width={8}
+                        />
+                      </a>
+                    )}
+                    {contactData.instagram_link && (
+                      <a
+                        href={contactData.instagram_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={instagramIcon}
+                          alt="Instagram"
+                          className="social-icon"
+                          width={16}
+                        />
+                      </a>
+                    )}
+                  </div>
+                </span>
+              </>
+            ) : (
+              <span>Loading contact info...</span>
+            )}
           </div>
         </div>
       </div>
@@ -62,33 +110,28 @@ const Navbar = () => {
               <li><a href="#services" onClick={closeMenu}>Services</a></li>
               <li><a href="#plan" onClick={closeMenu}>Plan Your Trip</a></li>
               <li><a href="#testimonials" onClick={closeMenu}>Testimonials</a></li>
-              <li><a href="#gallery" onClick={()=>navigate("/gallery")}>Gallery</a></li>
+              <li><a href="#gallery" onClick={() => navigate("/gallery")}>Gallery</a></li>
               <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
             </ul>
+
             {/* ✅ Logo at the bottom */}
             <div className="mobile-bottom-logo">
               <img src={main_logo} alt="Logo" />
             </div>
+
             <div className="mobile-social">
-              <a
-                href="https://www.facebook.com/newalliedtours"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaFacebookF />
-              </a>
-              <a
-                href="https://www.instagram.com/newallied_tours"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaInstagram />
-              </a>
+              {contactData?.facebook_link && (
+                <a href={contactData.facebook_link} target="_blank" rel="noopener noreferrer">
+                  <FaFacebookF />
+                </a>
+              )}
+              {contactData?.instagram_link && (
+                <a href={contactData.instagram_link} target="_blank" rel="noopener noreferrer">
+                  <FaInstagram />
+                </a>
+              )}
             </div>
-
-            
           </div>
-
 
           {/* Hamburger */}
           <div className={`navbar-hamburger ${menuOpen ? 'open' : ''}`} onClick={handleMenuToggle}>

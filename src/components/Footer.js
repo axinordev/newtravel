@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Footer.css";
-import logo from "../assets/images/white_log.png";       // your logo
-import facebookIcon from "../assets/icons/facebook.png"; // your facebook icon
-import instagramIcon from "../assets/icons/instagram.png"; // your instagram icon
+import logo from "../assets/images/white_log.png";       // Company logo
+import facebookIcon from "../assets/icons/facebook.png"; // Facebook icon
+import instagramIcon from "../assets/icons/instagram.png"; // Instagram icon
 
 const Footer = () => {
+  const [contactInfo, setContactInfo] = useState({});
+
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        const response = await fetch(
+          "http://31.97.205.45:8081/api/admin_contact_section/"
+        );
+        const data = await response.json();
+        setContactInfo(data || {});
+      } catch (error) {
+        console.error("Error fetching contact info:", error);
+        setContactInfo({});
+      }
+    };
+    fetchContactInfo();
+  }, []);
+
   return (
     <footer className="footer-section">
       <div className="footer-top">
@@ -26,12 +44,24 @@ const Footer = () => {
 
         {/* Social Icons */}
         <div className="footer-social">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-            <img src={facebookIcon} alt="Facebook" className="social-icon" />
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-            <img src={instagramIcon} alt="Instagram" className="social-icon" />
-          </a>
+          {contactInfo.facebook_link && (
+            <a
+              href={contactInfo.facebook_link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={facebookIcon} alt="Facebook" className="social-icon" />
+            </a>
+          )}
+          {contactInfo.instagram_link && (
+            <a
+              href={contactInfo.instagram_link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={instagramIcon} alt="Instagram" className="social-icon" />
+            </a>
+          )}
         </div>
       </div>
 
@@ -39,6 +69,15 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <p>Copyright ©2025. New Allied Tours & Travels. All rights reserved.</p>
+      </div>
+      <div className="footer-bottom">
+        <p>Designed and developed by Axinor Technologies</p>
+        <h3>AXINOR PVT.LTD</h3>
+        <h4 className="cont">Kozhikode, Kerala, India</h4>
+        <h3>Contact Us</h3>
+        <h4 className="cont">axinortech.com</h4>
+        <h4 className="cont">+91 9746577467 / +91 9446186026</h4>
+
       </div>
     </footer>
   );

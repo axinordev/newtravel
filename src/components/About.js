@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './About.css';
 import whatsappIcon from '../assets/icons/whatsapp.png';
 import map_tourist from '../assets/images/map_tourist.png';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 // Import images for upcoming tours
 import canadaImg from '../assets/upcoming_tours/canada.jpg';
@@ -10,95 +12,106 @@ import malaysiaImg from '../assets/upcoming_tours/malaysia.png';
 import dubaiImg from '../assets/upcoming_tours/dubai.png';
 import thailandImg from '../assets/upcoming_tours/thailand.jpg';
 import azerbaijanImg from '../assets/upcoming_tours/azerbaijan.jpg';
-import PortugalImg from '../assets/upcoming_tours/Portugal.jpg';
 import goaImg from '../assets/upcoming_tours/goa.jpg';
 import rajasthanImg from '../assets/upcoming_tours/rajasthan.jpg';
 import kashmirImg from '../assets/upcoming_tours/kashmir.jpg';
-import mumbaiImg from '../assets/upcoming_tours/mumbai.jpg';
-import delhiImg from '../assets/upcoming_tours/delhi.jpg';
-import ChennaiImg from '../assets/upcoming_tours/Chennai.jpg';
-import KolkataImg from '../assets/upcoming_tours/Kolkata.jpg';
-import BangaloreImg from '../assets/upcoming_tours/Bangalore.jpg';
-import HyderabadImg from '../assets/upcoming_tours/Hyderabad.jpg';
-import JaipurImg from '../assets/upcoming_tours/Jaipur.jpg';
 import munnarImg from '../assets/upcoming_tours/munnar.jpg';
 import wayanadImg from '../assets/upcoming_tours/wayanad.jpg';
-import alleppeyImg from '../assets/upcoming_tours/alleppey.jpg';
-import kovalamImg from '../assets/upcoming_tours/kovalam.jpg';
 import thekkadyImg from '../assets/upcoming_tours/thekkady.jpg';
-import KochiImg from '../assets/upcoming_tours/Kochi.jpg';
-import TrivandrumImg from '../assets/upcoming_tours/Trivandrum.jpg';
-import KozhikodeImg from '../assets/upcoming_tours/Kozhikode.jpg';
-import ThrissurImg from '../assets/upcoming_tours/Thrissur.jpg';
-import KannurImg from '../assets/upcoming_tours/Kannur.jpg';
-import KollamImg from '../assets/upcoming_tours/kollam.jpg';
 import alappuzhaImg from '../assets/upcoming_tours/alappuzha.jpg';
+import singaporebaliImg from '../assets/upcoming_tours/singaporeBaliTour.png';
+import ayodhyaImg from '../assets/upcoming_tours/AyodhyaVaranasi.jpg';
+import goldenTriangleImg from '../assets/upcoming_tours/golden.jpg';
+import delhiMadhura from '../assets/upcoming_tours/delhimadura.jpg'
+import munnarKumarakamImg from '../assets/upcoming_tours/munnarkumarakam.jpg'
+import kochiCalicutWayanadImg from '../assets/upcoming_tours/kochicalicut.jpg'
+import himachalImg from '../assets/upcoming_tours/himachal.jpg'
 
 // Placeholder for missing images
 const placeholderImg = 'https://via.placeholder.com/300x200/003366/FFFFFF?text=Coming+Soon';
 
+// ---------- CONSTANT DATA ----------
+const upcomingTours = {
+  international: [
+    { id: 1, name: 'Canada', image: canadaImg },
+    { id: 2, name: 'Vietnam', image: vietnamImg },
+    { id: 3, name: 'Kuching, Malaysia', image: malaysiaImg },
+    { id: 4, name: 'Singapore Bali', image: singaporebaliImg },
+    { id: 5, name: 'Dubai', image: dubaiImg },
+    
+  ],
+  domestic: [
+    { id: 1, name: 'The Golden Triangle', image: goldenTriangleImg },
+    { id: 2, name: 'Rajasthan', image: rajasthanImg },
+    { id: 3, name: 'Delhi, Madura, Vrindavan and Agra', image: delhiMadhura },
+    { id: 4, name: 'Ayodhya, Varanasi', image: ayodhyaImg },
+    
+  ],
+  kerala: [
+    { id: 1, name: 'Munnar, Kumarakam and Alleppey', image: munnarKumarakamImg },
+    { id: 2, name: 'Kochi, Calicut and Wayanad', image: kochiCalicutWayanadImg },
+  ],
+};
+
+const popularDestinations = {
+  international: [
+    { id: 1, name: 'Europe', image: canadaImg },
+    { id: 2, name: 'Vietnam', image: azerbaijanImg },
+    { id: 3, name: 'Azerbaijan', image: malaysiaImg },
+    { id: 4, name: 'Dubai', image: dubaiImg },
+    { id: 5, name: 'Thailand', image: thailandImg },
+  ],
+  domestic: [
+    { id: 1, name: 'Kashmir', image: kashmirImg },
+    { id: 2, name: 'Rajasthan', image: rajasthanImg },
+    { id: 3, name: 'Himachal Pradesh', image: himachalImg },
+    { id: 4, name: 'Goa', image: goaImg },
+  ],
+  kerala: [
+    { id: 1, name: 'Munnar', image: munnarImg },
+    { id: 2, name: 'Wayanad', image: wayanadImg },
+    { id: 3, name: 'Alappuzha', image: alappuzhaImg },
+    { id: 4, name: 'Thekkady', image: thekkadyImg },
+  ],
+};
+
+// ---------- COMPONENT ----------
 const About = () => {
+  const [aboutDescription, setAboutDescription] = useState('Loading...');
   const [upcomingTab, setUpcomingTab] = useState('international');
   const [popularTab, setPopularTab] = useState('international');
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef(null);
 
-  // --- TOUR DATA ---
-  const upcomingTours = {
-    international: [
-      { id: 1, name: 'Canada', image: canadaImg },
-      { id: 2, name: 'Vietnam', image: vietnamImg },
-      { id: 3, name: 'Kuching, Malaysia', image: malaysiaImg },
-      { id: 4, name: 'Dubai', image: dubaiImg },
-      { id: 5, name: 'Thailand', image: thailandImg },
-    ],
-    domestic: [
-      { id: 1, name: 'Goa', image: goaImg },
-      { id: 2, name: 'Rajasthan', image: rajasthanImg },
-      { id: 3, name: 'Kashmir', image: kashmirImg },
-      { id: 4, name: 'Mumbai', image: mumbaiImg },
-      { id: 5, name: 'Delhi', image: delhiImg },
-    ],
-    kerala: [
-      { id: 1, name: 'Munnar', image: munnarImg },
-      { id: 2, name: 'Wayanad', image: wayanadImg },
-      { id: 3, name: 'Alleppey', image: alleppeyImg },
-      { id: 4, name: 'Kovalam', image: kovalamImg },
-      { id: 5, name: 'Thekkady', image: thekkadyImg },
-    ],
+  const navigate = useNavigate();
+
+  // Navigate to tour detail page
+  const handleViewDetails = (id, category) => {
+    navigate(`/tour/${id}?category=${category}`);
   };
 
-  const popularDestinations = {
-    international: [
-      { id: 1, name: 'Portugal', image: PortugalImg },
-      { id: 2, name: 'Vietnam', image: vietnamImg },
-      { id: 3, name: 'Azerbaijan', image: azerbaijanImg },
-      { id: 4, name: 'Dubai', image: dubaiImg },
-      { id: 5, name: 'Thailand', image: thailandImg },
-      { id: 6, name: 'Canada', image: canadaImg },
-      { id: 7, name: 'Malaysia', image: malaysiaImg },
-    ],
-    domestic: [
-      { id: 1, name: 'Delhi', image: delhiImg },
-      { id: 2, name: 'Mumbai', image: mumbaiImg },
-      { id: 3, name: 'Kolkata', image: KolkataImg },
-      { id: 4, name: 'Chennai', image: ChennaiImg },
-      { id: 5, name: 'Bangalore', image: BangaloreImg },
-      { id: 6, name: 'Hyderabad', image: HyderabadImg },
-      { id: 7, name: 'Jaipur', image: JaipurImg },
-    ],
-    kerala: [
-      { id: 1, name: 'Kochi', image: KochiImg },
-      { id: 2, name: 'Trivandrum', image: TrivandrumImg },
-      { id: 3, name: 'Kozhikode', image: KozhikodeImg },
-      { id: 4, name: 'Thrissur', image: ThrissurImg },
-      { id: 5, name: 'Kannur', image: KannurImg },
-      { id: 6, name: 'Kollam', image: KollamImg },
-      { id: 7, name: 'Alappuzha', image: alappuzhaImg },
-    ],
-  };
+  // --- Fetch about description from backend ---
+  useEffect(() => {
+    axios
+      .get('http://31.97.205.45:8081/api/about_section/')
+      .then((res) => {
+        const data = Array.isArray(res.data) ? res.data[0] : res.data;
+        setAboutDescription(data?.description || '');
+      })
+      .catch(() => setAboutDescription('Failed to load content.'));
+  }, []);
 
-  // --- HANDLERS ---
+  // --- Auto-scroll popular destinations carousel ---
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const total = popularDestinations[popularTab].length;
+      setCurrentIndex((prev) => (prev + 1) % total);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [popularTab]);
+
+  // --- Handlers ---
   const handleUpcomingTabChange = (tab) => setUpcomingTab(tab);
 
   const handlePopularTabChange = (tab) => {
@@ -107,15 +120,13 @@ const About = () => {
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+    const total = popularDestinations[popularTab].length;
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + total) % total);
   };
 
   const handleNext = () => {
-    const destinations = popularDestinations[popularTab];
-    const maxIndex = Math.max(destinations.length - 5, 0);
-    setCurrentIndex((prevIndex) =>
-      prevIndex < maxIndex ? prevIndex + 1 : maxIndex
-    );
+    const total = popularDestinations[popularTab].length;
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % total);
   };
 
   return (
@@ -125,16 +136,7 @@ const About = () => {
         <div className="about-content">
           <div className="about-text">
             <h2>NEW ALLIED TOURS AND TRAVELS</h2>
-            <p>
-              New Allied Tours & Travels, founded in 1999, brings over 25 years of travel
-              industry expertise to your vacation planning. IATA accredited and recognized
-              for our exceptional service, we offer online ticketing, hotel reservations,
-              visa and passport assistance, tours, travel insurance, and luxury vehicle
-              rentals. Recognized by the Government of India and accredited by the IATA,
-              we ensure top-tier service and unforgettable travel experiences. Our
-              headquarters in Kochi is always ready to welcome you — together, we grow
-              one journey at a time.
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: aboutDescription }} />
           </div>
           <div className="about-image">
             <img src={map_tourist} alt="Map of Tourist Destinations" />
@@ -143,7 +145,7 @@ const About = () => {
 
         {/* --- UPCOMING TOURS --- */}
         <section>
-          <h2 className="section-title">UPCOMING TOURS</h2>
+          <h2 id="#destination" className="section-title">UPCOMING TOURS</h2>
           <div className="tab-container">
             <div className="tab-options">
               {['international', 'domestic', 'kerala'].map((tab) => (
@@ -163,8 +165,12 @@ const About = () => {
                     <img src={tour.image || placeholderImg} alt={tour.name} />
                   </div>
                   <div className="card-content">
-                    <h3>{tour.name}</h3>
-                    <button type="button" className="view-details-btn">
+                    <span className="tour-name">{tour.name}</span>
+                    <button
+                      type="button"
+                      className="view-details-btn"
+                      onClick={() => handleViewDetails(tour.id, upcomingTab)}
+                    >
                       View Details
                     </button>
                   </div>
@@ -194,31 +200,32 @@ const About = () => {
                 &#10094;
               </div>
               <div className="destinations-carousel" ref={carouselRef}>
-                {popularDestinations[popularTab]
-                  .slice(currentIndex, currentIndex + 5)
-                  .map((destination, index) => {
-                    const isActive = index === 2;
-                    return (
-                      <div
-                        key={`${popularTab}-${destination.id}`}
-                        className={`destination-card ${isActive ? 'active' : ''}`}
-                        style={{
-                          transform: isActive ? 'scale(1.1)' : 'scale(1)',
-                          zIndex: isActive ? 2 : 1,
-                        }}
-                      >
-                        <div className="card-image">
-                          <img
-                            src={destination.image || placeholderImg}
-                            alt={destination.name}
-                          />
-                        </div>
-                        <div className="card-content">
-                          <h3>{destination.name}</h3>
-                        </div>
+                {popularDestinations[popularTab].map((destination, index) => {
+                  const visibleIndex = (index - currentIndex + popularDestinations[popularTab].length) % popularDestinations[popularTab].length;
+                  if (visibleIndex >= 5) return null;
+
+                  const isActive = visibleIndex === 2;
+                  return (
+                    <div
+                      key={`${popularTab}-${destination.id}`}
+                      className={`destination-card ${isActive ? 'active' : ''}`}
+                      style={{
+                        transform: isActive ? 'scale(1.1)' : 'scale(1)',
+                        zIndex: isActive ? 2 : 1,
+                      }}
+                    >
+                      <div className="card-image">
+                        <img
+                          src={destination.image || placeholderImg}
+                          alt={destination.name}
+                        />
                       </div>
-                    );
-                  })}
+                      <div className="card-content">
+                        <h3>{destination.name}</h3>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
               <div className="carousel-arrow right" onClick={handleNext}>
                 &#10095;

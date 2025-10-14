@@ -1,5 +1,5 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 /* ---------- HERO SECTION ---------- */
 .siteBanner {
   background-size: cover;
@@ -58,7 +58,7 @@
   padding-bottom: 50px;
   text-transform: uppercase;
   font-family: "Poppins", sans-serif;
-   font-weight: 400;
+  font-weight: 400;
 }
 
 /* ---------- INTRO SECTION ---------- */
@@ -69,13 +69,35 @@
   padding: 4rem 2rem;
 }
 
+.siteIntro .row {
+  display: flex;           /* ensure side by side */
+  flex-wrap: wrap;         /* wrap on smaller screens */
+  align-items: center;     /* vertical alignment */
+  gap: 2rem;               /* spacing between image and text */
+}
+
+.siteIntro .col-lg-4 {
+  flex: 0 0 auto;          /* fixed width for image */
+}
+
+.siteIntro .col-lg-8 {
+  flex: 1;                  /* description fills remaining space */
+}
+
 .siteIntro p {
   font-size: 1.2rem;
   color: white;
+  margin: 0;
 }
 
 .text-white {
   color: rgba(255, 255, 255, 1) !important;
+}
+
+.hero-badge {
+  max-width: 320px;
+  width: 100%;
+  height: auto;
 }
 
 /* ---------- RESPONSIVE ---------- */
@@ -102,8 +124,27 @@
     text-align: center;
   }
 
+  .siteIntro .row {
+    flex-direction: column; /* stack columns */
+  }
+
+  .siteIntro .col-lg-8 {
+    padding-left: 0;
+    margin-top: 1.5rem;
+  }
+
   .siteIntro p {
     font-size: 1rem;
+  }
+
+  .hero-badge {
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-badge {
+    max-width: 200px;
   }
 }
 
@@ -127,22 +168,10 @@
 
   .siteIntro {
     padding: 2.5rem 1rem;
-    text-align: center;
   }
 
   .siteIntro p {
     font-size: 0.95rem;
     line-height: 1.5;
-  }
-}
-.hero-badge {
-  max-width: 320px;
-  width: 100%;
-  height: auto;
-}
-
-@media (max-width: 768px) {
-  .hero-badge {
-    max-width: 220px;
   }
 }

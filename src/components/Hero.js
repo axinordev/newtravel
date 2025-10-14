@@ -1,49 +1,76 @@
-import React from "react";
-import heroImage from "../assets/images/together_we_grow.png";
-import heroImage25 from "../assets/images/25_years.png";
+import React, { useEffect, useState } from "react";
+import heroImage25 from "../assets/images/25_years.png"; // Badge image
+import togetherWeGrow from "../assets/images/together_we_grow.png"; // Fixed hero banner
 import "./Hero.css";
 
 const Hero = () => {
+  const [heroDescription, setHeroDescription] = useState("Loading..."); // Only description from API
+  const [introDescription, setIntroDescription] = useState("Loading..."); // Intro section
+
+  // Fetch hero description from API
+  useEffect(() => {
+    fetch("http://31.97.205.45:8081/api/hero_section/")
+      .then((res) => res.json())
+      .then((data) => {
+        const description = data.description || "TOGETHER WE GROW";
+        setHeroDescription(description);
+      })
+      .catch(() => setHeroDescription("TOGETHER WE GROW"));
+  }, []);
+
+  // Fetch intro section data
+  useEffect(() => {
+    fetch("http://31.97.205.45:8081/api/anniversary_section/")
+      .then((res) => res.json())
+      .then((data) => {
+        setIntroDescription(data.description || "");
+      })
+      .catch(() => setIntroDescription(""));
+  }, []);
+
   return (
     <>
+      {/* Hero Section */}
       <section
         className="siteBanner"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{
+          backgroundImage: `url(${togetherWeGrow})`
+        }}
       >
         <div className="overlay"></div>
         <div className="blue-overlay"></div>
         <div className="hero-content">
           <h1 className="m-0 text-uppercase fw-lighter" data-aos="fade-up">
-            Together We <strong>G</strong>r<strong>o</strong>w
+            {heroDescription}
           </h1>
         </div>
       </section>
 
+      {/* Intro Section */}
       <section className="siteSection siteIntro">
-        <div className="container-fluid">
-          <div className="row align-items-center gx-lg-5 gy-5">
-            <div className="col-lg-4 col-sm-5">
-              <img
-                className="img-fluid hero-badge"
-                src={heroImage25}
-                alt="26 years badge" 
-                data-aos="zoom-out-right"
-                data-aos-anchor-placement="center-bottom"
-                data-aos-delay="200"
-                data-aos-easing="ease-out-back"
-              />
-            </div>
-            <div className="col-md">
-              <p className="mb-3 text-white ps-xl-5 25years">
-                For 26 : years, we've been discovering new horizons, creating memories, and building connections together. Celebrating <span className="d-inline-block">26 years</span> of going together, growing together!
-              </p>
-              <p className="m-0 text-white ps-xl-5 25years">
-                Since 1999, New Allied Tours and Travels has been your trusted partner in crafting unforgettable journeys. Thank you for being a part of our story. Here’s to many more adventures ahead!
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div className="container-fluid">
+    <div className="row align-items-center d-flex gx-5">
+      <div className="col-lg-4 col-12">
+        <img
+          className="img-fluid hero-badge"
+          src={heroImage25}
+          alt="25 years badge"
+          data-aos="zoom-out-right"
+          data-aos-anchor-placement="center-bottom"
+          data-aos-delay="200"
+          data-aos-easing="ease-out-back"
+        />
+      </div>
+      <div className="col-lg-8 col-12">
+        <p
+          className="mb-3 text-white ps-xl-5 25years"
+          dangerouslySetInnerHTML={{ __html: introDescription }}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
     </>
   );
 };

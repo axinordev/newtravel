@@ -294,3 +294,32 @@
     font-size: 1rem;
   }
 }
+
+.styled-dropdown {
+  padding: 12px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background-color: #fff;
+  appearance: none;
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  width: 100%;
+}
+
+.styled-dropdown:focus {
+  border-color: #0078d7;
+  box-shadow: 0 0 5px rgba(0,136,255,0.4);
+}
+
+.budget {
+    padding: 12px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    background-color: #fff;
+    appearance: none;
+    outline: none;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    width: 100%;
+}

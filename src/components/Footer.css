@@ -1,9 +1,9 @@
 .footer-section {
   background-color: #222222;
   color: #fff;
-  padding: 60px 40px 60px 40px;
+  padding: 60px 40px;
   font-family: Arial, sans-serif;
-  height: 35vh;
+  height: 60vh;
   margin-top: 5px;
 }
 
@@ -64,10 +64,29 @@
   border: 0.5px solid #fff;
 }
 
-/* Bottom copyright text */
+/* Bottom sections */
 .footer-bottom {
   text-align: center;
   font-size: 0.9rem;
+  margin-top: 15px;
+  line-height: 1.8; /* adds breathing space between lines */
+}
+
+.footer-bottom.contact-footer h3,
+.footer-bottom.contact-footer h4,
+.footer-bottom.contact-footer p {
+  margin: 8px 0; /* consistent gap between lines */
+}
+
+.footer-bottom.contact-footer {
+  margin-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 20px;
+}
+
+/* Address and contact text color */
+.cont {
+  color: rgb(180, 180, 180);
 }
 
 /* --- Responsive --- */
@@ -84,5 +103,22 @@
 
   .footer-social {
     margin-top: 10px;
+  }
+
+  .footer-bottom {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-section {
+    padding: 40px 20px;
+    height: auto;
+  }
+
+  .footer-bottom.contact-footer h3,
+  .footer-bottom.contact-footer h4,
+  .footer-bottom.contact-footer p {
+    margin: 10px 0;
   }
 }
