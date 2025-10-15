@@ -102,7 +102,7 @@ const Plan_your_trip = () => {
 
     try {
       await axios.post(
-        "http://admin.newalliedtour.net:8081/api/enquiries/",
+        "https://admin.newalliedtour.net/api/enquiries/",
         formData,
         { headers: { "Content-Type": "application/json" } }
       );

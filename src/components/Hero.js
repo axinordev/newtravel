@@ -9,7 +9,7 @@ const Hero = () => {
 
   // Fetch hero description from API
   useEffect(() => {
-    fetch("http://admin.newalliedtour.net:8081/api/hero_section/")
+    fetch("https://admin.newalliedtour.net/api/hero_section/")
       .then((res) => res.json())
       .then((data) => {
         const description = data.description || "TOGETHER WE GROW";
@@ -20,7 +20,7 @@ const Hero = () => {
 
   // Fetch intro section data
   useEffect(() => {
-    fetch("http://admin.newalliedtour.net:8081/api/anniversary_section/")
+    fetch("https://admin.newalliedtour.net/api/anniversary_section/")
       .then((res) => res.json())
       .then((data) => {
         setIntroDescription(data.description || "");

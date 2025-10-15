@@ -11,7 +11,7 @@ const Footer = () => {
     const fetchContactInfo = async () => {
       try {
         const response = await fetch(
-          "http://admin.newalliedtour.net:8081/api/admin_contact_section/"
+          "https://admin.newalliedtour.net/api/admin_contact_section/"
         );
         const data = await response.json();
         setContactInfo(data || {});

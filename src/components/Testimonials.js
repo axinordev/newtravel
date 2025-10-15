@@ -11,7 +11,7 @@ const Testimonials = () => {
     const fetchTestimonials = async () => {
       try {
         const response = await fetch(
-          "http://admin.newalliedtour.net:8081/api/reviews_section/"
+          "https://admin.newalliedtour.net/api/reviews_section/"
         );
         const data = await response.json();
         setTestimonials(data);
