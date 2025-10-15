@@ -19,7 +19,7 @@ const Navbar = () => {
   // ✅ Fetch contact info from backend
   useEffect(() => {
     axios
-      .get("http://31.97.205.45:8081/api/admin_contact_section/")
+      .get("http://admin.newalliedtour.net:8081/api/admin_contact_section/")
       .then((response) => {
         if (Array.isArray(response.data)) {
           setContactData(response.data[0]);

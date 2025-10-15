@@ -94,7 +94,7 @@ const About = () => {
   // --- Fetch about description from backend ---
   useEffect(() => {
     axios
-      .get('http://31.97.205.45:8081/api/about_section/')
+      .get('http://admin.newalliedtour.net:8081/api/about_section/')
       .then((res) => {
         const data = Array.isArray(res.data) ? res.data[0] : res.data;
         setAboutDescription(data?.description || '');

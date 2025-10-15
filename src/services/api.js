@@ -1,5 +1,5 @@
 // API service for backend communication
-const API_BASE_URL = 'http://31.97.205.45:8081/api'; // Updated with actual backend URL
+const API_BASE_URL = 'http://admin.newalliedtour.net:8081/api'; // Updated with actual backend URL
 
 // Generic fetch function with error handling
 const fetchFromAPI = async (endpoint, options = {}) => {

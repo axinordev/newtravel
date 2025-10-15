@@ -16,7 +16,7 @@ const GetInTouch = () => {
     const fetchContactInfo = async () => {
       try {
         const response = await fetch(
-          "http://31.97.205.45:8081/api/admin_contact_section/"
+          "http://admin.newalliedtour.net:8081/api/admin_contact_section/"
         );
         const data = await response.json();
         setContactInfo(data || {});
@@ -39,7 +39,7 @@ const GetInTouch = () => {
     setSubmitStatus("Submitting...");
     try {
       const response = await fetch(
-        "http://31.97.205.45:8081/api/get_in_touch/",
+        "http://admin.newalliedtour.net:8081/api/get_in_touch/",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
