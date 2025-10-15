@@ -102,7 +102,7 @@ const About = () => {
       .catch(() => setAboutDescription('Failed to load content.'));
   }, []);
 
-  // --- Auto-scroll popular destinations carousel ---
+  // --- Auto-scroll popular destinations carousell ---
   useEffect(() => {
     const interval = setInterval(() => {
       const total = popularDestinations[popularTab].length;
