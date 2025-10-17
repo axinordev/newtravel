@@ -1,37 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Gallery.css";
-
-// Import background and images
 import bannerBg from "../assets/images/gallery_banner.png";
-import img1 from "../assets/gallery/gallery1.jpg";
-import img2 from "../assets/gallery/gallery2.jpg";
-import img3 from "../assets/gallery/gallery3.jpg";
-import img4 from "../assets/gallery/gallery4.jpg";
-import img5 from "../assets/gallery/gallery5.jpg";
-import img6 from "../assets/gallery/gallery6.jpg";
-import img7 from "../assets/gallery/gallery7.jpg";
-import img8 from "../assets/gallery/gallery8.jpg";
-import img9 from "../assets/gallery/gallery9.jpg";
-import img10 from "../assets/gallery/gallery10.jpg";
-import img11 from "../assets/gallery/gallery11.jpg";
-import img12 from "../assets/gallery/gallery12.jpg";
-import img13 from "../assets/gallery/gallery12.jpg";
-import img14 from "../assets/gallery/gallery14.jpg";
-import img15 from "../assets/gallery/gallery15.jpg";
-import img16 from "../assets/gallery/gallery16.jpg";
-import img17 from "../assets/gallery/gallery17.jpg";
-import img18 from "../assets/gallery/gallery18.jpg";
-import img19 from "../assets/gallery/gallery19.jpg";
 import GetInTouch from "../components/Get_in_touch";
 import Map from "../components/Map";
 
 const Gallery = () => {
-  const [activeTab, setActiveTab] = useState("videos");
+  const [activeTab, setActiveTab] = useState("images");
+  const [images, setImages] = useState([]);
+  const [videos, setVideos] = useState([]);
+
+  // Fetch images from API
+  useEffect(() => {
+    fetch("https://admin.newalliedtour.net/api/gallery_image_section/")
+      .then(res => res.json())
+      .then(data => setImages(data.filter(i => i.image).map(i => i.image)))
+      .catch(err => console.error("Failed to fetch images:", err));
+  }, []);
+
+  // Fetch videos from API
+  useEffect(() => {
+    fetch("https://admin.newalliedtour.net/api/gallery_video_section/")
+      .then(res => res.json())
+      .then(data => setVideos(data.filter(i => i.link).map(i => i.link)))
+      .catch(err => console.error("Failed to fetch videos:", err));
+  }, []);
+
+  // Get YouTube video ID (works with youtu.be and watch?v= links)
+  const getYoutubeId = url => {
+    try {
+      const parsed = new URL(url);
+      if (parsed.hostname.includes("youtu.be")) return parsed.pathname.slice(1);
+      if (parsed.searchParams.has("v")) return parsed.searchParams.get("v");
+      return "";
+    } catch {
+      return "";
+    }
+  };
+
+  // Generate YouTube thumbnail URL
+  const getYoutubeThumbnail = url => {
+    const id = getYoutubeId(url);
+    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : "";
+  };
 
   return (
     <div className="gallery-container" id="gallery">
-      {/* Banner Section */}
-
+      {/* Banner */}
       <section
         className="gallery-banner"
         style={{ backgroundImage: `url(${bannerBg})` }}
@@ -41,44 +55,60 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Tabs Section */}
+      {/* Tabs */}
       <div className="gallery-tabs">
-        <button
-          className={`tab-btn ${activeTab === "videos" ? "active" : ""}`}
-          onClick={() => setActiveTab("videos")}
-        >
-          Videos
-        </button>
-        <button
-          className={`tab-btn ${activeTab === "images" ? "active" : ""}`}
-          onClick={() => setActiveTab("images")}
-        >
-          Images
-        </button>
+        {["videos", "images"].map(tab => (
+          <button
+            key={tab}
+            className={`tab-btn ${activeTab === tab ? "active" : ""}`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          </button>
+        ))}
       </div>
 
-      {/* Content Section */}
+      {/* Content */}
       <div className="gallery-content">
-        {activeTab === "videos" ? (
-          <div className="video-grid">
-            <iframe
-              src="https://www.youtube.com/embed/5qap5aO4i9A"
-              title="Dubai Tour"
-              allowFullScreen
-            ></iframe>
+        {activeTab === "images" ? (
+          <div className="image-grid">
+            {images.length ? (
+              images.map((img, i) => (
+                <div key={i} className="img-box">
+                  <img src={img} alt={`Gallery ${i + 1}`} />
+                </div>
+              ))
+            ) : (
+              <p>No images available.</p>
+            )}
           </div>
         ) : (
-          <div className="image-grid">
-            {[img1, img2, img3, img4, img5, img6,img6, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19].map((image, i) => (
-              <div key={i} className="img-box">
-                <img src={image} alt={`Gallery ${i + 1}`} />
-              </div>
-            ))}
+          <div className="video-grid">
+            {videos.length ? (
+              videos.map((link, i) => (
+                <a
+                  key={i}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="video-box"
+                >
+                  <img
+                    src={getYoutubeThumbnail(link)}
+                    alt={`Video ${i + 1}`}
+                    className="video-thumbnail"
+                  />
+                </a>
+              ))
+            ) : (
+              <p>No videos available.</p>
+            )}
           </div>
         )}
       </div>
-      <GetInTouch/>
-      <Map/>
+
+      <GetInTouch />
+      <Map />
     </div>
   );
 };
