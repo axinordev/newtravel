@@ -33,7 +33,7 @@ const Footer = () => {
 
         {/* Links */}
         <div className="footer-links">
-          <a href="#about">About</a>
+          <a href="#About">About</a>
           <a href="#destination">Destinations</a>
           <a href="#services">Services</a>
           <a href="#plan">Plan Your Trip</a>

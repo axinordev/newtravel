@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from "react";
 import heroImage25 from "../assets/images/25_years.png"; // Badge image
-import togetherWeGrow from "../assets/images/together_we_grow.png"; // Fixed hero banner
 import "./Hero.css";
 
 const Hero = () => {
-  const [heroDescription, setHeroDescription] = useState("Loading..."); // Only description from API
-  const [introDescription, setIntroDescription] = useState("Loading..."); // Intro section
+  const [heroDescription, setHeroDescription] = useState("Loading...");
+  const [heroImage, setHeroImage] = useState(""); // <-- For hero background
+  const [introDescription, setIntroDescription] = useState("Loading...");
 
-  // Fetch hero description from API
+  // Fetch hero section from API
   useEffect(() => {
     fetch("https://admin.newalliedtour.net/api/hero_section/")
       .then((res) => res.json())
       .then((data) => {
-        const description = data.description || "TOGETHER WE GROW";
-        setHeroDescription(description);
+        setHeroDescription(data.description || "TOGETHER WE GROW");
+        setHeroImage(data.image || ""); // <-- Set image URL from API
       })
-      .catch(() => setHeroDescription("TOGETHER WE GROW"));
+      .catch(() => {
+        setHeroDescription("TOGETHER WE GROW");
+        setHeroImage(""); // fallback to empty or default image
+      });
   }, []);
 
-  // Fetch intro section data
+  // Fetch intro section
   useEffect(() => {
     fetch("https://admin.newalliedtour.net/api/anniversary_section/")
       .then((res) => res.json())
-      .then((data) => {
-        setIntroDescription(data.description || "");
-      })
+      .then((data) => setIntroDescription(data.description || ""))
       .catch(() => setIntroDescription(""));
   }, []);
 
@@ -34,7 +35,7 @@ const Hero = () => {
       <section
         className="siteBanner"
         style={{
-          backgroundImage: `url(${togetherWeGrow})`
+          backgroundImage: heroImage ? `url(${heroImage})` : "none"
         }}
       >
         <div className="overlay"></div>
@@ -48,29 +49,28 @@ const Hero = () => {
 
       {/* Intro Section */}
       <section className="siteSection siteIntro">
-  <div className="container-fluid">
-    <div className="row align-items-center d-flex gx-5">
-      <div className="col-lg-4 col-12">
-        <img
-          className="img-fluid hero-badge"
-          src={heroImage25}
-          alt="25 years badge"
-          data-aos="zoom-out-right"
-          data-aos-anchor-placement="center-bottom"
-          data-aos-delay="200"
-          data-aos-easing="ease-out-back"
-        />
-      </div>
-      <div className="col-lg-8 col-12">
-        <p
-          className="mb-3 text-white ps-xl-5 25years"
-          dangerouslySetInnerHTML={{ __html: introDescription }}
-        />
-      </div>
-    </div>
-  </div>
-</section>
-
+        <div className="container-fluid">
+          <div className="row align-items-center d-flex gx-5">
+            <div className="col-lg-4 col-12">
+              <img
+                className="img-fluid hero-badge"
+                src={heroImage25}
+                alt="25 years badge"
+                data-aos="zoom-out-right"
+                data-aos-anchor-placement="center-bottom"
+                data-aos-delay="200"
+                data-aos-easing="ease-out-back"
+              />
+            </div>
+            <div className="col-lg-8 col-12">
+              <p
+                className="mb-3 text-white ps-xl-5 25years"
+                dangerouslySetInnerHTML={{ __html: introDescription }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

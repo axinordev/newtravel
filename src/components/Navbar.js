@@ -10,13 +10,12 @@ import axios from "axios";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [contactData, setContactData] = useState(null); // ✅ new state
+  const [contactData, setContactData] = useState(null);
 
   const navigate = useNavigate()
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
 
-  // ✅ Fetch contact info from backend
   useEffect(() => {
     axios
       .get("https://admin.newalliedtour.net/api/admin_contact_section/")
