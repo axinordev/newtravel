@@ -73,11 +73,23 @@ const Testimonials = () => {
 
         <div className="testimonial-card">
           <div className="testimonial-content">
+            {/* Profile Image */}
+            {current.image && (
+              <img
+                src={current.image}
+                alt={current.name}
+                className="testimonial-image"
+              />
+            )}
+
+            {/* Stars */}
             <div className="stars">
               {[...Array(parseInt(current.rating))].map((_, i) => (
                 <FaStar key={i} />
               ))}
             </div>
+
+            {/* Testimonial Text */}
             <p className="testimonial-text">{current.description}</p>
             <h4 className="testimonial-name">{current.name}</h4>
           </div>
