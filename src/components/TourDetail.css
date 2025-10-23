@@ -105,7 +105,11 @@
   margin-bottom: 30px;
 }
 
-.tour-description h2, .tour-highlights h2, .tour-inclusions h2, .tour-booking h2 {
+/* Section Headings */
+.tour-description h2, 
+.tour-highlights h2, 
+.tour-inclusions h2, 
+.tour-booking h2 {
   font-size: 1.8rem;
   color: #003366;
   margin-bottom: 15px;
@@ -113,12 +117,40 @@
   padding-bottom: 10px;
 }
 
+/* Tour Paragraph Text */
 .tour-description p {
   font-size: 1.1rem;
   line-height: 1.7;
   color: #333;
 }
 
+/* === About List for Multiple Points === */
+.about-list {
+  list-style: none; /* remove default bullets */
+  margin-left: 1.5rem;
+  line-height: 1.8;
+  font-size: 17px; /* matches other text */
+  color: #333;
+  padding-left: 0;
+}
+
+.about-list li {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 30px; /* space for custom bullet */
+}
+
+.about-list li::before {
+  content: "•"; /* custom bullet */
+  color: #0094da; /* blue bullet */
+  font-size: 22px; /* adjust bullet size */
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: 1.2;
+}
+
+/* Highlights and Inclusions */
 .tour-highlights, .tour-inclusions {
   margin-bottom: 30px;
 }
@@ -144,57 +176,12 @@
   font-weight: bold;
 }
 
+/* Booking Section */
 .tour-booking {
   background-color: #f9f9f9;
   padding: 30px;
   border-radius: 8px;
   text-align: center;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .tour-image-carousel {
-    height: 40vh;
-  }
-  
-  .carousel-arrow {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-  }
-  
-  .carousel-arrow.left {
-    left: 10px;
-  }
-  
-  .carousel-arrow.right {
-    right: 10px;
-  }
-  
-  .tour-name {
-    font-size: 1.8rem;
-  }
-  
-  .tour-meta {
-    font-size: 1rem;
-  }
-  
-  .tour-description h2, .tour-highlights h2, .tour-inclusions h2 {
-    font-size: 1.5rem;
-  }
-  
-  .tour-description p, .tour-highlights li, .tour-inclusions li {
-    font-size: 1rem;
-  }
-}
-
-/* Fix for blank space on right side in mobile view */
-html, body {
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 .book-now-btn {
@@ -213,6 +200,7 @@ html, body {
   background-color: #002244;
 }
 
+/* Loading */
 .loading {
   text-align: center;
   font-size: 1.5rem;
@@ -220,9 +208,24 @@ html, body {
   color: #003366;
 }
 
+/* Responsive Styles */
 @media (max-width: 768px) {
   .tour-image-carousel {
     height: 50vh;
+  }
+  
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .carousel-arrow.left {
+    left: 10px;
+  }
+  
+  .carousel-arrow.right {
+    right: 10px;
   }
   
   .tour-name {
@@ -241,8 +244,20 @@ html, body {
     text-align: center;
   }
   
-  .tour-description p {
+  .tour-description p, 
+  .about-list li, 
+  .tour-highlights li, 
+  .tour-inclusions li {
     font-size: 1rem;
     text-align: justify;
   }
+}
+
+/* Fix for blank space on right side in mobile view */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
 }

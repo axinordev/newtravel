@@ -34,7 +34,7 @@ const About = () => {
       .catch(() => setAboutData({ title: "Failed to load", description: "" }));
   }, []);
 
-  // --- Fetch Options and dependent data dynamically ---
+  // --- Fetch Options and Tours ---
   useEffect(() => {
     axios
       .get("https://admin.newalliedtour.net/api/option_section/")
@@ -42,7 +42,6 @@ const About = () => {
         const fetchedOptions = res.data;
         setOptions(fetchedOptions);
 
-        // Initialize grouped objects dynamically
         const groupedTours = {};
         const groupedDestinations = {};
         fetchedOptions.forEach((opt) => {
@@ -50,7 +49,7 @@ const About = () => {
           groupedDestinations[opt.option] = [];
         });
 
-        // --- Fetch Upcoming Tours ---
+        // Upcoming Tours
         const toursRes = await axios.get(
           "https://admin.newalliedtour.net/api/upcoming_tours_section/"
         );
@@ -67,7 +66,7 @@ const About = () => {
           }
         });
 
-        // --- Fetch Popular Destinations ---
+        // Popular Destinations
         const destRes = await axios.get(
           "https://admin.newalliedtour.net/api/popular_destination_section/"
         );
@@ -86,7 +85,6 @@ const About = () => {
         setUpcomingTours(groupedTours);
         setPopularDestinations(groupedDestinations);
 
-        // Set default tabs to first available option
         if (fetchedOptions.length > 0) {
           setUpcomingTab(fetchedOptions[0].option);
           setPopularTab(fetchedOptions[0].option);
@@ -95,7 +93,7 @@ const About = () => {
       .catch((err) => console.error("Option fetch error:", err));
   }, []);
 
-  // --- Carousel auto-scroll ---
+  // Carousel auto-scroll
   useEffect(() => {
     const interval = setInterval(() => {
       const total = (popularDestinations[popularTab] || []).length;
@@ -104,15 +102,16 @@ const About = () => {
     return () => clearInterval(interval);
   }, [popularTab, popularDestinations]);
 
-  // --- Navigation handler ---
-  const handleViewDetails = (id, category) => {
-    navigate(`/tour/${id}?category=${category}`);
+  // Navigate to TourDetail and scroll to top
+  const handleViewDetails = (id) => {
+    navigate(`/tour/${id}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <div className="about-container" id="About">
       <div className="about-section">
-        {/* --- ABOUT SECTION --- */}
+        {/* About Section */}
         <div className="about-content">
           <div className="about-text">
             <h2>{aboutData.title}</h2>
@@ -123,7 +122,7 @@ const About = () => {
           </div>
         </div>
 
-        {/* --- UPCOMING TOURS --- */}
+        {/* Upcoming Tours */}
         <section>
           <h2 className="section-title">UPCOMING TOURS</h2>
           <div className="tab-container">
@@ -151,7 +150,7 @@ const About = () => {
                     <button
                       type="button"
                       className="view-details-btn"
-                      onClick={() => handleViewDetails(tour.id, upcomingTab)}
+                      onClick={() => handleViewDetails(tour.id)}
                     >
                       View Details
                     </button>
@@ -162,7 +161,7 @@ const About = () => {
           </div>
         </section>
 
-        {/* --- POPULAR DESTINATIONS --- */}
+        {/* Popular Destinations */}
         <section id="destination">
           <h2 className="section-title">POPULAR DESTINATIONS</h2>
           <div className="tab-container">
@@ -240,7 +239,7 @@ const About = () => {
         </section>
       </div>
 
-      {/* --- WhatsApp Floating Button --- */}
+      {/* WhatsApp Floating Button */}
       <a
         href="https://wa.me/1234567890"
         className="whatsapp-float"

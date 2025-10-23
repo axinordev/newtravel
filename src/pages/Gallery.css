@@ -60,17 +60,20 @@
 /* ======== Video Section ======== */
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(3, 1fr); /* 3 videos per row */
   gap: 25px;
   padding: 40px 60px;
 }
 
+.video-grid video,
 .video-grid iframe {
   width: 100%;
-  height: 220px;
+  height: 220px; /* Adjust height as needed */
   border-radius: 10px;
   border: none;
+  object-fit: cover;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  aspect-ratio: 16 / 9; /* Optional: maintain 16:9 ratio */
 }
 
 /* ======== Image Grid ======== */
@@ -95,6 +98,12 @@
 }
 
 /* ======== Responsive ======== */
+@media (max-width: 992px) {
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 videos per row on tablets */
+  }
+}
+
 @media (max-width: 768px) {
   .gallery-banner {
     height: 250px;
@@ -112,5 +121,11 @@
   .video-grid,
   .image-grid {
     padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .video-grid {
+    grid-template-columns: 1fr; /* 1 video per row on mobile */
   }
 }

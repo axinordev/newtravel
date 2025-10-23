@@ -1,47 +1,27 @@
 import React, { useState, useEffect } from "react";
 import "./Gallery.css";
 import bannerBg from "../assets/images/gallery_banner.png";
-import GetInTouch from "../components/Get_in_touch";
-import Map from "../components/Map";
 
 const Gallery = () => {
   const [activeTab, setActiveTab] = useState("images");
   const [images, setImages] = useState([]);
   const [videos, setVideos] = useState([]);
 
-  // Fetch images from API
+  // Fetch images
   useEffect(() => {
     fetch("https://admin.newalliedtour.net/api/gallery_image_section/")
-      .then(res => res.json())
-      .then(data => setImages(data.filter(i => i.image).map(i => i.image)))
-      .catch(err => console.error("Failed to fetch images:", err));
+      .then((res) => res.json())
+      .then((data) => setImages(data.filter((i) => i.image).map((i) => i.image)))
+      .catch((err) => console.error("Failed to fetch images:", err));
   }, []);
 
-  // Fetch videos from API
+  // Fetch videos (keep full object so we have video + thumbnail)
   useEffect(() => {
     fetch("https://admin.newalliedtour.net/api/gallery_video_section/")
-      .then(res => res.json())
-      .then(data => setVideos(data.filter(i => i.link).map(i => i.link)))
-      .catch(err => console.error("Failed to fetch videos:", err));
+      .then((res) => res.json())
+      .then((data) => setVideos(data.filter((i) => i.video))) // keep full object
+      .catch((err) => console.error("Failed to fetch videos:", err));
   }, []);
-
-  // Get YouTube video ID (works with youtu.be and watch?v= links)
-  const getYoutubeId = url => {
-    try {
-      const parsed = new URL(url);
-      if (parsed.hostname.includes("youtu.be")) return parsed.pathname.slice(1);
-      if (parsed.searchParams.has("v")) return parsed.searchParams.get("v");
-      return "";
-    } catch {
-      return "";
-    }
-  };
-
-  // Generate YouTube thumbnail URL
-  const getYoutubeThumbnail = url => {
-    const id = getYoutubeId(url);
-    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : "";
-  };
 
   return (
     <div className="gallery-container" id="gallery">
@@ -57,7 +37,7 @@ const Gallery = () => {
 
       {/* Tabs */}
       <div className="gallery-tabs">
-        {["videos", "images"].map(tab => (
+        {["videos", "images"].map((tab) => (
           <button
             key={tab}
             className={`tab-btn ${activeTab === tab ? "active" : ""}`}
@@ -85,20 +65,15 @@ const Gallery = () => {
         ) : (
           <div className="video-grid">
             {videos.length ? (
-              videos.map((link, i) => (
-                <a
-                  key={i}
-                  href={link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="video-box"
-                >
-                  <img
-                    src={getYoutubeThumbnail(link)}
-                    alt={`Video ${i + 1}`}
-                    className="video-thumbnail"
+              videos.map((videoObj, i) => (
+                <div key={i} className="video-box">
+                  <video
+                    src={videoObj.video}
+                    poster={videoObj.thumbnail} // ✅ show thumbnail when idle
+                    controls
+                    className="video-player"
                   />
-                </a>
+                </div>
               ))
             ) : (
               <p>No videos available.</p>
@@ -106,9 +81,6 @@ const Gallery = () => {
           </div>
         )}
       </div>
-
-      <GetInTouch />
-      <Map />
     </div>
   );
 };
