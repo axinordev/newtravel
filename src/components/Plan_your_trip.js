@@ -8,8 +8,7 @@ const Plan_your_trip = () => {
   const [formData, setFormData] = useState({
     Destination: "",
     Destination2: "",
-    full_name: "",
-    location: "",
+    travelPlans: "", // step 2 field
     email: "",
     phone: "",
   });
@@ -30,7 +29,7 @@ const Plan_your_trip = () => {
   const nextStep = (e) => {
     e.stopPropagation();
     if (!validateStep()) return;
-    setStep((prev) => Math.min(prev + 1, 2)); // max 2 steps
+    setStep((prev) => Math.min(prev + 1, 3)); // max 3 steps
     setError("");
   };
 
@@ -49,8 +48,14 @@ const Plan_your_trip = () => {
         }
         break;
       case 2:
-        if (!formData.full_name || !formData.location || !formData.email || !formData.phone) {
-          setError("Please fill in all contact details.");
+        if (!formData.travelPlans) {
+          setError("Please share your travel plans.");
+          return false;
+        }
+        break;
+      case 3:
+        if (!formData.email || !formData.phone) {
+          setError("Please fill in both email and phone number.");
           return false;
         }
         break;
@@ -65,9 +70,18 @@ const Plan_your_trip = () => {
     if (!validateStep()) return;
 
     try {
+      // Send only the fields expected by backend
+      const payload = {
+        Destination: formData.Destination,
+        Destination2: formData.Destination2,
+        travelPlans: formData.travelPlans,
+        email: formData.email,
+        phone: formData.phone,
+      };
+
       await axios.post(
         "https://admin.newalliedtour.net/api/enquiries/",
-        formData,
+        payload,
         { headers: { "Content-Type": "application/json" } }
       );
 
@@ -75,8 +89,7 @@ const Plan_your_trip = () => {
       setFormData({
         Destination: "",
         Destination2: "",
-        full_name: "",
-        location: "",
+        travelPlans: "",
         email: "",
         phone: "",
       });
@@ -95,8 +108,14 @@ const Plan_your_trip = () => {
           <h2 className="plan-title">PLAN YOUR TRIP</h2>
 
           <div className="progress-line">
-            <div className="progress-fill" style={{ width: `${((step - 1) / 1) * 100}%` }}></div>
-            <div className="progress-dot" style={{ left: `calc(${((step - 1) / 1) * 100}% + 0%)` }}></div>
+            <div
+              className="progress-fill"
+              style={{ width: `${((step - 1) / 2) * 100}%` }}
+            ></div>
+            <div
+              className="progress-dot"
+              style={{ left: `calc(${((step - 1) / 2) * 100}% + 0%)` }}
+            ></div>
           </div>
 
           <div className="plan-content">
@@ -128,24 +147,31 @@ const Plan_your_trip = () => {
 
             {step === 2 && (
               <>
+                <h3 className="plan-question">Share Your Travel Plans</h3>
                 <div className="plan-field">
-                  <input
-                    type="text"
-                    name="full_name"
-                    value={formData.full_name}
+                  <label>
+                    Share your travel plans with us{" "}
+                    <a
+                      href="mailto:queriesnewallied@gmail.com"
+                      style={{ color: "#0078d7", textDecoration: "underline" }}
+                    >
+                      @queriesnewallied@gmail.com
+                    </a>
+                  </label>
+                  <textarea
+                    name="travelPlans"
+                    value={formData.travelPlans}
                     onChange={handleChange}
-                    placeholder="Full Name"
+                    placeholder="Write your travel plans here..."
+                    rows={6} // bigger textarea
+                    style={{ resize: "vertical" }} // vertical resize
                   />
                 </div>
-                <div className="plan-field">
-                  <input
-                    type="text"
-                    name="location"
-                    value={formData.location}
-                    onChange={handleChange}
-                    placeholder="Location"
-                  />
-                </div>
+              </>
+            )}
+
+            {step === 3 && (
+              <>
                 <div className="plan-field">
                   <input
                     type="email"
@@ -172,8 +198,8 @@ const Plan_your_trip = () => {
 
           <div className="button-group">
             {step > 1 && <button className="btn back" onClick={prevStep}>BACK</button>}
-            {step === 1 && <button className="btn next" onClick={nextStep}>NEXT</button>}
-            {step === 2 && <button className="btn submit" onClick={handleSubmit}>SUBMIT</button>}
+            {step < 3 && <button className="btn next" onClick={nextStep}>NEXT</button>}
+            {step === 3 && <button className="btn submit" onClick={handleSubmit}>SUBMIT</button>}
           </div>
         </div>
       </section>

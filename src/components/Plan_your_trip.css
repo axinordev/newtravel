@@ -323,3 +323,17 @@
     transition: border-color 0.3s;
     width: 100%;
 }
+
+.plan-field textarea {
+  padding: 12px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.plan-field textarea:focus {
+  border-color: #0078d7;
+}
