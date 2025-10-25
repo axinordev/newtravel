@@ -28,7 +28,7 @@ const Hero = () => {
       .then((data) => {
         const anniversaryData = Array.isArray(data) ? data[0] : data;
         setIntroDescription(anniversaryData.description || "");
-        setAnniversaryImage(anniversaryData.image || ""); // <-- Fetch image dynamically
+        setAnniversaryImage(anniversaryData.logo || ""); // <-- Fetch image dynamically
       })
       .catch(() => {
         setIntroDescription("");
