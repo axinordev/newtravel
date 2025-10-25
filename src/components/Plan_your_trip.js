@@ -42,8 +42,8 @@ const Plan_your_trip = () => {
   const validateStep = () => {
     switch (step) {
       case 1:
-        if (!formData.Destination || !formData.Destination2) {
-          setError("Please fill in both destination fields.");
+        if (!formData.Destination) {
+          setError("Please fill destination field.");
           return false;
         }
         break;
@@ -121,15 +121,15 @@ const Plan_your_trip = () => {
           <div className="plan-content">
             {step === 1 && (
               <>
-                <h3 className="plan-question">Where would you like to travel?</h3>
+                <h3 className="plan-question">Which are your favourite destinations?</h3>
                 <div className="plan-field">
-                  <label>Where would you like to travel?</label>
+                  <label>Which are your favourite destinations?</label>
                   <input
                     type="text"
                     name="Destination"
                     value={formData.Destination}
                     onChange={handleChange}
-                    placeholder="Enter main destination"
+                    placeholder="Which are your favourite destinations?"
                   />
                 </div>
                 <div className="plan-field">
@@ -139,7 +139,7 @@ const Plan_your_trip = () => {
                     name="Destination2"
                     value={formData.Destination2}
                     onChange={handleChange}
-                    placeholder="Enter other destination"
+                    placeholder="Where do you plan to travel next?"
                   />
                 </div>
               </>
@@ -173,6 +173,7 @@ const Plan_your_trip = () => {
             {step === 3 && (
               <>
                 <div className="plan-field">
+                  <label>Email:</label>
                   <input
                     type="email"
                     name="email"
@@ -182,6 +183,7 @@ const Plan_your_trip = () => {
                   />
                 </div>
                 <div className="plan-field">
+                  <label>Phone Number:</label>
                   <input
                     type="tel"
                     name="phone"

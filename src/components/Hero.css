@@ -138,13 +138,29 @@
   }
 
   .hero-badge {
-    max-width: 220px;
+  width: auto;         /* Use natural width */
+  height: auto;        /* Use natural height */
+  max-width: 320px;    /* Limit to original/desired size */
+  display: block;
+  margin: 0 auto;      /* Center on small screens */
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-badge {
+    max-width: 220px;   /* Smaller on tablets */
   }
 }
 
 @media (max-width: 768px) {
   .hero-badge {
     max-width: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-badge {
+    max-width: 150px;   /* Smaller on mobile */
   }
 }
 

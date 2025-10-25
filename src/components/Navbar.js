@@ -191,17 +191,24 @@ const Navbar = () => {
                   href="/gallery"
                   onClick={(e) => {
                     e.preventDefault();
-                    closeMenu();
-                    navigate("/gallery");
+                    closeMenu();          // if you have a mobile menu
+                    navigate("/gallery"); // route to gallery page
+                    setTimeout(() => {
+                      const gallerySection = document.getElementById("gallery");
+                      if (gallerySection) {
+                        gallerySection.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }
+                    }, 50); // wait 50ms for component to mount
                   }}
                 >
                   Gallery
                 </a>
+
               </li>
               <li>
                 <a
-                  href="#footer"
-                  onClick={(e) => handleSectionClick(e, "#footer")}
+                  href="#contact"
+                  onClick={(e) => handleSectionClick(e, "#contact")}
                 >
                   Contact
                 </a>

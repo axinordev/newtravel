@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import heroImage25 from "../assets/images/25_years.png"; // Badge image
 import "./Hero.css";
 
 const Hero = () => {
   const [heroDescription, setHeroDescription] = useState("Loading...");
-  const [heroImage, setHeroImage] = useState(""); // <-- For hero background
+  const [heroImage, setHeroImage] = useState(""); // Hero background image
   const [introDescription, setIntroDescription] = useState("Loading...");
+  const [anniversaryImage, setAnniversaryImage] = useState(""); // ✅ Anniversary badge image
 
   // Fetch hero section from API
   useEffect(() => {
@@ -13,20 +13,27 @@ const Hero = () => {
       .then((res) => res.json())
       .then((data) => {
         setHeroDescription(data.description || "TOGETHER WE GROW");
-        setHeroImage(data.image || ""); // <-- Set image URL from API
+        setHeroImage(data.image || "");
       })
       .catch(() => {
         setHeroDescription("TOGETHER WE GROW");
-        setHeroImage(""); // fallback to empty or default image
+        setHeroImage("");
       });
   }, []);
 
-  // Fetch intro section
+  // Fetch anniversary section (description + image)
   useEffect(() => {
     fetch("https://admin.newalliedtour.net/api/anniversary_section/")
       .then((res) => res.json())
-      .then((data) => setIntroDescription(data.description || ""))
-      .catch(() => setIntroDescription(""));
+      .then((data) => {
+        const anniversaryData = Array.isArray(data) ? data[0] : data;
+        setIntroDescription(anniversaryData.description || "");
+        setAnniversaryImage(anniversaryData.image || ""); // <-- Fetch image dynamically
+      })
+      .catch(() => {
+        setIntroDescription("");
+        setAnniversaryImage(""); // fallback
+      });
   }, []);
 
   return (
@@ -47,20 +54,22 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* Intro Section */}
+      {/* Intro / Anniversary Section */}
       <section className="siteSection siteIntro">
         <div className="container-fluid">
           <div className="row align-items-center d-flex gx-5">
             <div className="col-lg-4 col-12">
-              <img
-                className="img-fluid hero-badge"
-                src={heroImage25}
-                alt="25 years badge"
-                data-aos="zoom-out-right"
-                data-aos-anchor-placement="center-bottom"
-                data-aos-delay="200"
-                data-aos-easing="ease-out-back"
-              />
+              {anniversaryImage && (
+                <img
+                  className="img-fluid hero-badge"
+                  src={anniversaryImage}
+                  alt="Anniversary Badge"
+                  data-aos="zoom-out-right"
+                  data-aos-anchor-placement="center-bottom"
+                  data-aos-delay="200"
+                  data-aos-easing="ease-out-back"
+                />
+              )}
             </div>
             <div className="col-lg-8 col-12">
               <p

@@ -6,22 +6,39 @@ const Gallery = () => {
   const [activeTab, setActiveTab] = useState("images");
   const [images, setImages] = useState([]);
   const [videos, setVideos] = useState([]);
+  const [contentLoaded, setContentLoaded] = useState(false); // ✅ track when content finishes loading
 
   // Fetch images
   useEffect(() => {
     fetch("https://admin.newalliedtour.net/api/gallery_image_section/")
       .then((res) => res.json())
-      .then((data) => setImages(data.filter((i) => i.image).map((i) => i.image)))
+      .then((data) =>
+        setImages(data.filter((i) => i.image).map((i) => i.image))
+      )
       .catch((err) => console.error("Failed to fetch images:", err));
   }, []);
 
-  // Fetch videos (keep full object so we have video + thumbnail)
+  // Fetch videos
   useEffect(() => {
     fetch("https://admin.newalliedtour.net/api/gallery_video_section/")
       .then((res) => res.json())
       .then((data) => setVideos(data.filter((i) => i.video))) // keep full object
       .catch((err) => console.error("Failed to fetch videos:", err));
   }, []);
+
+  // Set contentLoaded to true when either images or videos are loaded
+  useEffect(() => {
+    if (images.length || videos.length) {
+      setContentLoaded(true);
+    }
+  }, [images, videos]);
+
+  // Scroll to top after content is loaded
+  useEffect(() => {
+    if (contentLoaded) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [contentLoaded]);
 
   return (
     <div className="gallery-container" id="gallery">

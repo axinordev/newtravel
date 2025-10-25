@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./About.css";
 import "./common.css";
-import whatsappIcon from "../assets/icons/whatsapp.png";
 import map_tourist from "../assets/images/map_tourist.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+
+
 
 const placeholderImg =
   "https://via.placeholder.com/300x200/003366/FFFFFF?text=Coming+Soon";
@@ -17,6 +19,7 @@ const About = () => {
   const [upcomingTab, setUpcomingTab] = useState("");
   const [popularTab, setPopularTab] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [whatsappLink, setWhatsappLink] = useState("");
   const carouselRef = useRef(null);
   const navigate = useNavigate();
 
@@ -32,6 +35,19 @@ const About = () => {
         });
       })
       .catch(() => setAboutData({ title: "Failed to load", description: "" }));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("https://admin.newalliedtour.net/api/admin_contact_section/")
+      .then((res) => {
+        const data = Array.isArray(res.data) ? res.data[0] : res.data;
+        setWhatsappLink(data?.whatsapp_link || "");
+      })
+      .catch((err) => {
+        console.error("Failed to fetch contact info:", err);
+        setWhatsappLink(""); // fallback
+      });
   }, []);
 
   // --- Fetch Options and Tours ---
@@ -241,13 +257,13 @@ const About = () => {
 
       {/* WhatsApp Floating Button */}
       <a
-        href="https://wa.me/1234567890"
-        className="whatsapp-float"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src={whatsappIcon} alt="Chat on WhatsApp" />
-      </a>
+          href={whatsappLink}
+          className="whatsapp-float"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={require("../assets/icons/whatsapp.png")} alt="Chat on WhatsApp" />
+        </a>
     </div>
   );
 };
