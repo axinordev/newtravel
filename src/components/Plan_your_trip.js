@@ -121,7 +121,7 @@ const Plan_your_trip = () => {
           <div className="plan-content">
             {step === 1 && (
               <>
-                <h3 className="plan-question">Which are your favourite destinations?</h3>
+                {/* <h3 className="plan-question">Which are your favourite destinations?</h3> */}
                 <div className="plan-field">
                   <label>Which are your favourite destinations?</label>
                   <input
